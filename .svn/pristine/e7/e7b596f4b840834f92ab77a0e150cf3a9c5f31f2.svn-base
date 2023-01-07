@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="infoBoard">
+
+	<insert id="insertInfoBoard" parameterType="infoboBoard.InfoBoardVO">
+	
+	     INSERT INTO infobo 
+	     ( infobo_num, infobo_title, infobo_con, infobo_date, atch_file_id, dic_id)
+	     VALUES (infobo_seq.nextval, #{infoboTitle}, #{infoboCon}, sysdate, #{atchFileId}, #{dicId})
+	
+	</insert>
+	
+	<update id="updateInfoBoard">
+		
+		UPDATE infobo
+		   SET infobo_title = #{infoboTitle}
+		     , infobo_con = #{infoboCon}
+			 , infobo_date = sysdate	
+		     , atch_file_id = #{atchFileId}
+<!-- 		     , dic_id = #{dicId} -->
+		 WHERE infobo_num = #{infoboNum}
+		
+	</update>
+
+	<delete id="deleteInfoBoard" parameterType="int">
+	
+		delete from infobo
+		where infobo_num = #{infoboNum}
+	
+	</delete>
+	
+	<resultMap type="infoboBoard.InfoBoardVO" id="infoBoardMap">
+		<result property="infoboNum" column="infobo_num" />
+		<result property="infoboTitle" column="infobo_title" />
+		<result property="infoboCon" column="infobo_con" />
+<!-- 		<result property="infoboLike" column="infobo_like" /> -->
+		<result property="dicId" column="dic_id" />
+		<result property="atchFileId" column="atch_file_id" />
+		
+	</resultMap>
+
+	<select id="infoBoardAllList" resultMap="infoBoardMap">
+		select *
+		from infobo 
+		WHERE 1=1
+		ORDER BY infobo_num DESC
+	
+	</select>
+	
+	<select id="getInfoBoard" parameterType="int" resultMap="infoBoardMap">
+	
+		select *
+		from infobo
+		where infobo_num = #{infoboNum}
+	
+	</select>
+	
+	<select id="checkInfoBoard" parameterType="int" resultType="int">
+	
+		select count(*) as cnt
+		from infobo
+		where infobo_num = #{infoboNum}
+	
+	
+	</select>
+	
+	<select id="searchInfoBoardList" parameterType="InfoBoardVO" resultType="InfoBoardVO" >
+
+		select * from infobo
+		where 1=1
+		<if test="infoboNum != null and infoboNum != ''">
+			and infobo_num = #{infoboNum}
+		</if>
+		<if test="infoboTitle != null and infoboTitle != ''">
+			and infobo_title = #{infoboTitle}
+		</if>
+<!-- 		<if test="infoboLike != null and infoboLike != ''"> -->
+<!-- 			and infobo_like = #{infoboLike} -->
+<!-- 		</if> -->
+		<if test="dicId != null and dicId != ''">
+			and dic_id = #{dicId}
+		</if>
+		<if test="infoboCon != null and infoboCon != ''">
+			and infobo_con like '%' || #{infoboCon} || '%' 
+		</if>
+	</select>
+	<update id="updateInfoboCount" parameterType="int">
+		UPDATE INFOBO SET INFOBO_LIKE = INFOBO_LIKE+ 1 WHERE INFOBO_NUM = #{infoboNum}
+	</update>
+	
+	<select id="myInfoBoardList" parameterType="InfoBoardVO" resultType="InfoBoardVO">
+		SELECT *
+		FROM   infobo
+		WHERE  1=1
+		<if test="dicId != null and dicId != ''">
+			and dic_id = #{dicId}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="search">
+
+
+	<resultMap type="search.SearchVO" id="searchMap">
+		<result property="sapoCode" column = "sapo_code"/>
+		<result property="sapoBrnm" column = "sapo_brnm"/>
+		<result property="sapoCarte" column = "sapo_carte"/>
+		<result property="sapoUpdae" column = "sapo_updae"/>
+		<result property="sapoUpdaeEnd" column = "sapo_updae_end"/>
+		<result property="sapoLink" column = "sapo_link"/>
+		<result property="mastId" column = "mast_id"/>
+		<result property="atchFileId" column = "atch_file_id"/>
+		<result property="fileStreCours" column = "file_stre_cours"/>
+		<result property="streFileNm" column = "stre_file_nm"/>
+		<result property="orignlFileNm" column = "orignl_file_nm"/>
+	</resultMap>
+	
+
+	<select id="searchAllList" resultMap="searchMap">
+		   select *
+		   from sapo sp, atch_file_detail afd
+		   where sp.atch_file_id = afd.atch_file_id 
+		   <if test="keyword != null">       
+		    AND SAPO_BRNM = #{keyword} 
+ 		   </if>
+
+	</select>
+	
+	<select id="getSearch" resultMap="searchMap">
+	select *
+	from sapo
+	where sapo_code = #{sapoCode}
+	</select>
+   
+   <select id="searchList" parameterType="SearchVO" resultType="SearchVO">
+   
+   
+  select * from sapo
+  		where 1=1
+  		<if test="sapoCode !=null and sapoCode !=''">
+		and sapo_code = #{sapoCode}
+  		</if>
+  		<if test="sapoBrnm !=null and sapoBrnm !=''">
+		and sapo_brnm = #{sapoBrnm}
+  		</if>
+  		<if test="sapoCarte !=null and sapoCarte !=''">
+		and sapo_carte = #{sapoCarte}
+		</if>
+		<if test="sapoUpdae !=null and sapoUpdae !=''">
+		and sapo_updae = '%' ||?|| '%' 
+		</if>	
+  
+   
+   </select>
+	
+</mapper>

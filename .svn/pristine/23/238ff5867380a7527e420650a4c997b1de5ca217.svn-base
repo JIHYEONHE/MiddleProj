@@ -1,0 +1,47 @@
+package reply;
+
+import java.util.List;
+
+import dic.DicDao;
+import dic.DicDaoImpl;
+import dic.DicService;
+import dic.DicServiceImple;
+
+public class ReplyServiceImpl implements ReplyService{
+	
+	private static ReplyService replyservice;
+	
+	private ReplyDAO replyDao;
+	
+	private ReplyServiceImpl() {
+		replyDao = ReplyDAOImpl.getInstance();
+	}
+	
+	public static ReplyService getInstance() {
+		if(replyservice == null) {
+			replyservice = new ReplyServiceImpl();
+		}
+		return replyservice;
+	}
+
+	@Override
+	public int replyInsert(ReplyVO vo) {
+		int resultchk = replyDao.replyInsert(vo);
+		return resultchk;
+	}
+
+	@Override
+	public List<ReplyVO> getReplyList(int infoboNum) {
+		List<ReplyVO> vo = replyDao.getReplyList(infoboNum);
+		System.out.println("vo size :" + vo.size());
+		return vo;
+	}
+
+	@Override
+	public int deleteReply(ReplyVO vo) {
+		int delresult = replyDao.deleteReply(vo);
+		return delresult;
+	}
+	
+	
+	}

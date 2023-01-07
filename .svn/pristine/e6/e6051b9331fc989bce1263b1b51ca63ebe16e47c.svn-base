@@ -1,0 +1,42 @@
+package reply;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import dic.DicDao;
+import dic.DicDaoImpl;
+import util.MyBatisUtil;
+
+public class ReplyDAOImpl implements ReplyDAO {
+
+	private static ReplyDAO replyDao;
+	
+	private SqlSession sqlsession;
+	
+	private ReplyDAOImpl() {
+		sqlsession = MyBatisUtil.getInstance(true);
+	}
+	public static ReplyDAO getInstance() {
+		if(replyDao == null) {
+			replyDao = new ReplyDAOImpl();
+		}
+		return replyDao;
+	}
+	@Override
+	public int replyInsert(ReplyVO vo) {
+		int resultchk = sqlsession.insert("replyInsert", vo);
+		return resultchk;
+	}
+	@Override
+	public List<ReplyVO> getReplyList(int infoboNum) {
+		List<ReplyVO> vo = sqlsession.selectList("getReplyList", infoboNum);
+		return vo;
+	}
+	@Override
+	public int deleteReply(ReplyVO vo) {
+		int delresult = sqlsession.delete("delReply", vo);
+		return delresult;
+	}	
+	
+}

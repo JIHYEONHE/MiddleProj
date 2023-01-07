@@ -1,0 +1,48 @@
+package dic;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.sun.mail.iap.Response;
+
+@WebServlet("/dic/delete.do")
+public class DicDeleteController extends HttpServlet {
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		String dicId = req.getParameter("dicId");
+		String dicPw = req.getParameter("dicPw");
+
+		DicDao dicdao = DicDaoImpl.getInstance();
+		System.out.println("컨트롤 아이디" + dicId);
+		System.out.println("컨트롤 비번" + dicPw);
+
+		DicVO vo = new DicVO();
+
+		DicService dicService = DicServiceImple.getInstance();
+		vo.setDicId(dicId);
+		vo.setDicPw(dicPw);
+		int cnt = dicService.remveDic(vo);
+		String msg = "";
+		if (cnt > 0) {
+			//req.getRequestDispatcher("/view/dic/loginForm.jsp").forward(req, resp);
+			session.invalidate();
+		} else {
+			//req.getRequestDispatcher("/view/dic/dicmodifyForm.jsp").forward(req, resp);
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+
+}

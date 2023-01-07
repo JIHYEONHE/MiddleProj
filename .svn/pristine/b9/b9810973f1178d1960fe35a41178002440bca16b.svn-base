@@ -1,0 +1,72 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file = "header.jsp" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <script src="assets/js/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/QnAlist/qadetail.css">
+    <title>Document</title>
+    <style>
+         ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  width: 200px;
+  background: #2192b4;
+  height: 550px;
+  overflow: auto;
+  position: fixed;
+  text-align: center;
+}
+
+li a {
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: #000;
+  font-weight: bold;
+}
+
+li a:hover {
+  background: rgb(49, 40, 40);
+  color: #fff;
+}
+
+li a.home {
+  background : #333;
+  color: #fff;
+}
+
+.cd1 {
+  margin-left: 10px;
+  text-align: center;
+}
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a class="home" href="#">HOME</a></li><br>
+        <li><a href="<%=request.getContextPath()%>/view/dic/dicmodifyForm.jsp">회원정보 설정</a></li><br>
+        <li><a href="#">즐겨찾기</a></li><br>
+        <li><a href="#">나의 게시물</a></li><br>
+        <li><a href="#">나의  Q&A</a></li><br>
+        <li><a href="#">나의  포인트</a></li>
+      </ul>
+   <main>      
+      <div class="cd1">
+        <h1>큰 제목</h1>
+        <h2>작은 제목</h2>
+      
+     
+      
+      </div>
+   </main>
+</body>
+</html>
+<%@ include file = "footer.jsp" %>

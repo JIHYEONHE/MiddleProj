@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@page import="qaboard.QaBoardVO"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<% 
+   QaBoardVO qa = (QaBoardVO) request.getAttribute("qa");
+%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/QnAlist/insert.css">
+<title>Q&A 게시물 작성</title>
+</head>
+<body>
+	<main>
+		<div class="h1Container">
+			<h1>Q&A 작성 </h1>
+		</div>		
+		<form action="insert.do" method="post">
+
+
+			<div class="inputContainer">
+				<label class="label" for="name">제목 : </label>
+				<input type="text" id="name" name="qaQtitle" placeholder="제목을 작성하세요">
+			</div>
+			<div class="inputContainer">
+				<label for="name">내용 : </label>
+				<textarea id="description" name="qaQcont" placeholder="내용을 작성하세요"></textarea>
+			</div>
+			<div class="inputContainer">
+				<label for="name">작성자 : </label>
+				<input type="text" id="writer" name="dicId" value=${ID}>
+			</div>
+
+			
+			<div class="submitContainer">
+				<input type="submit" value="게시물등록">
+			</div>
+			
+			
+		</form>
+	</main>
+</body>
+</html>
+<%@ include file="../footer.jsp"%>
+
+<!-- 
+<table>
+	<tr>
+		<td>제목 : </td>
+		<td><input type="text" name="qaQtitle" value=""></td>
+	</tr>
+	<tr>
+		<td>내용: </td>
+		<td><input type="text" name="qaQcont" value=""></td>
+	</tr>
+	<tr>
+		<td>작성자 : </td>
+		<td><input type="text" name="dicId" value=""></td>
+	</tr>
+</table> -->

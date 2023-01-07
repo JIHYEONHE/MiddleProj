@@ -1,0 +1,44 @@
+package dic;
+
+import java.util.List;
+
+import infoboBoard.InfoBoardVO;
+
+public interface DicService {
+
+	/**
+	 * 회원 가입(insert)
+	 * @param vo
+	 * @return
+	 */
+	public int insertMember(DicVO vo);
+		
+	public int idCheckMember(String dicId);
+	
+	public String loginMember(DicVO vo);
+	
+	public String nicCheck(DicVO vo);
+	
+	public String adminLogin(DicVO vo);
+	
+	public DicVO getdicInfo(String dicId);
+	
+	public String findId(DicVO vo);
+
+	public int findPw(DicVO vo);
+	
+	public int Infoupdate(DicVO vo);
+
+	public void updatePwChg(DicVO vo);
+
+	public int remveDic(DicVO vo);
+	
+
+	public String checkPw(String dicPw);
+	
+	public int checkIdPw(DicVO vo);
+	
+	public List<DicVO> getAllDicList();
+
+
+}

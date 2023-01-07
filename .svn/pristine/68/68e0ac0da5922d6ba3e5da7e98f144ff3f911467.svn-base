@@ -1,0 +1,91 @@
+package qaboard;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import infoboBoard.InfoBoardVO;
+import util.MyBatisUtil;
+
+public class QaBoardDAOImpl implements QaBoardDAO {
+
+	private static QaBoardDAO qadao;
+	
+	private SqlSession sqlSession;
+	
+	private QaBoardDAOImpl() {
+		sqlSession = MyBatisUtil.getInstance(true);
+	}
+	
+	public static QaBoardDAO getInstance() {
+		if(qadao == null) {
+			qadao = new QaBoardDAOImpl();
+		}
+		return qadao;
+	}
+	
+	@Override
+	public int insertQaBoard(QaBoardVO qa) {
+		
+		int cnt = sqlSession.insert("qaboard.insertQaBoard",qa);
+		return 0;
+		
+	}
+
+	@Override
+	public boolean checkQaBoard(int qaQnum) {
+		boolean chk = false;
+		
+		int cnt = sqlSession.selectOne("qaboard.checkQaBoard",qaQnum);
+		
+		if(cnt>0) {
+			chk  = true;
+		}
+		return chk;
+	}
+
+	@Override
+	public int updateQaBoard(QaBoardVO qa) {
+		int cnt = sqlSession.update("qaboard.updateQaBoard", qa);
+		return cnt;
+	}
+
+	@Override
+	public int deleteQaBoard(int qaQnum) {
+	int cnt = sqlSession.delete("qaboard.deleteQaBoard", qaQnum);
+		return cnt;
+	}
+
+	@Override
+	public List<QaBoardVO> getAllQaBoardList() {
+	List<QaBoardVO> qaList = sqlSession.selectList("qaboard.QaBoardAllList");
+		return qaList;
+	}
+
+	@Override
+	public List<QaBoardVO> searchQaBoardList(QaBoardVO bv) {
+	List<QaBoardVO> qaList = sqlSession.selectList("qaboard.searchQaBoardList",bv);
+	return qaList;
+	}
+
+	@Override
+	public QaBoardVO getQaBoard(int qaQnum) {
+		QaBoardVO qaVO = sqlSession.selectOne("qaboard.getQaBoard", qaQnum);
+		return qaVO;
+	}
+
+	//댓글달기
+	@Override
+	public int answerQaBoard(QaBoardVO qa) {
+		int cnt = sqlSession.update("qaboard.answerQaBoard", qa);
+		return cnt;
+	}
+
+	@Override
+	public List<QaBoardVO> myQaBoardList(QaBoardVO ibv) {
+		List<QaBoardVO> qaList = 
+				sqlSession.selectList("qaBoard.myQaBoardList", ibv);
+		return qaList;
+	}
+
+}

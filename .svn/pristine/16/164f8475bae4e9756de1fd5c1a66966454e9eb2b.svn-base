@@ -1,0 +1,56 @@
+package infoboBoard;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet(value = "/infoBoard/list.do")
+public class ListInfoBoardController extends HttpServlet {
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("ID");
+		String boardGbn = req.getParameter("boardGbn");
+		
+		// 1. 서비스 객체 생성하기
+		InfoBoardService infoBoardService = InfoBoardServiceImpl.getInstance();
+		List<InfoBoardVO> infoBoardList = null;
+		if(boardGbn==null||boardGbn=="") {
+			// 2. 회원목록 조회
+			infoBoardList  = infoBoardService.getAllInfoBoardList();
+		}else if(boardGbn=="M") {
+			InfoBoardVO infoBoardVO = new InfoBoardVO();
+			infoBoardVO.setDicId(sessionId);
+			infoBoardVO.setBoardGbn(boardGbn);
+			infoBoardList  = infoBoardService.myInfoBoardList(infoBoardVO);
+		}
+		
+		
+		
+		
+		//조회수 업데이트
+		
+		
+		
+		req.setAttribute("infoBoardList", infoBoardList);
+		
+		RequestDispatcher dispatcher = 
+				req.getRequestDispatcher("/view/infoBoard/list.jsp");
+		
+		dispatcher.forward(req, resp);  // 뷰 페이지로 전달.
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+}

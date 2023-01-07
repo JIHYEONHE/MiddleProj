@@ -1,0 +1,97 @@
+package infoboBoard;
+
+import java.util.Date;
+
+import dic.DicVO;
+
+public class InfoBoardVO extends DicVO{
+
+	private int infoboNum;
+	private String infoboTitle;
+	private String infoboCon;
+	private String infoboDate;
+	private int infoboLike;
+	private String dicId;
+	private long atchFileId = -1;
+	private int fileSn = 1;
+	private String boardGbn;
+	
+	public int getInfoboNum() {
+		return infoboNum;
+	}
+
+	public void setInfoboNum(int infoboNum) {
+		this.infoboNum = infoboNum;
+	}
+
+	public String getInfoboTitle() {
+		return infoboTitle;
+	}
+
+	public void setInfoboTitle(String infoboTitle) {
+		this.infoboTitle = infoboTitle;
+	}
+
+	public String getInfoboCon() {
+		return infoboCon;
+	}
+
+	public void setInfoboCon(String infoboCon) {
+		this.infoboCon = infoboCon;
+	}
+
+		public int getInfoboLike() {
+		return infoboLike;
+	}
+
+	public void setInfoboLike(int infoboLike) {
+		this.infoboLike = infoboLike;
+	}
+
+	public String getInfoboDate() {
+		return infoboDate;
+	}
+
+	public void setInfoboDate(String infoboDate) {
+		this.infoboDate = infoboDate;
+	}
+	
+	public String getDicId() {
+		return dicId;
+	}
+
+	public void setDicId(String dicId) {
+		this.dicId = dicId;
+	}
+
+	public long getAtchFileId() {
+		return atchFileId;
+	}
+
+	public void setAtchFileId(long atchFileId) {
+		this.atchFileId = atchFileId;
+	}
+
+	public int getFileSn() {
+		return fileSn;
+	}
+
+	public void setFileSn(int fileSn) {
+		this.fileSn = fileSn;
+	}
+	
+	public String getBoardGbn() {
+		return boardGbn;
+	}
+
+	public void setBoardGbn(String boardGbn) {
+		this.boardGbn = boardGbn;
+	}
+
+	@Override
+	public String toString() {
+		return "InfoBoardVO [infoboNum=" + infoboNum + ", infoboTitle=" + infoboTitle + ", infoboCon=" + infoboCon
+				+ ", infoboDate=" + ", infoboLike=" + infoboLike + ", atchFileId=" + atchFileId + "]";
+	}
+
+}

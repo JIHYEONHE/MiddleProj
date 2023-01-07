@@ -1,0 +1,99 @@
+<%@page import="java.io.File"%>
+<%@ page import="sapo.SapoVO"%>
+<%@ page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+    List<SapoVO> sapList = 
+         (List<SapoVO>)request.getAttribute("sapList");
+
+   String msg = session.getAttribute("msg") == null?
+         ""   : (String) session.getAttribute("msg");
+   session.removeAttribute("msg");  // 꺼내온 메세지 속성값 삭제하기
+%>
+<%@ include file="../header.jsp" %>
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/styles2.css">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+<meta name="viewport" content="width=device-width", initial-scale"="1">
+<link href="${pageContext.request.contextPath}/css/QnAlist/QnAlist.css"
+	  rel="stylesheet" type="text/css">
+<link href="css/QnAlist/Styles.css" rel="stylesheet" />
+
+</head>
+<body>
+	<main>
+		<title>할인 목록</title> 
+		<nav class="navbar navbar-default">
+		<div class="navbar-header">
+<!-- 			<button type="button" class="navbar-toggle collapsed" -->
+<!-- 				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" -->
+<!-- 				aria-expanded="false"> -->
+<!-- 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span -->
+<!-- 					class="icon-bar"></span> -->
+<!-- 			</button> -->
+			
+		</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<table class="table table-striped"
+					style="text-align: center; border: 1px solid #dddddd">
+					<thead>
+						<tr>
+							<th style="background-color: #eeeeee; text-align: center;">게시물코드</th>
+							<th style="background-color: #eeeeee; text-align: center;">브랜드명</th>
+							<th style="background-color: #eeeeee; text-align: center;">카테고리</th>
+							<th style="background-color: #eeeeee; text-align: center;">시작기간</th>
+							<th style="background-color: #eeeeee; text-align: center;">종료기간</th>
+							<th style="background-color: #eeeeee; text-align: center;">링크</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							int sapoSize = sapList.size();
+						int pageSize = 5;
+						String pageNum = request.getParameter("pageNum");
+						if (pageNum == null) {
+							pageNum = "1";
+						}
+
+						int currentPage = Integer.parseInt(pageNum);
+						int startRow = (currentPage - 1) * pageSize;
+						int endRow = startRow + (pageSize);
+						if (endRow >= sapoSize) {
+							endRow = sapoSize;
+						}
+						%>
+
+						<%
+							if (sapoSize > 0) {
+							for (int i = startRow; i < endRow; i++) {
+						%>
+						<tr>
+							<td><%=sapList.get(i).getSapoCode() %></td>
+							<td><%=sapList.get(i).getSapoBrnm() %></td>
+							<td><%=sapList.get(i).getSapoCarte() %></td>
+							<td><%=sapList.get(i).getSapoUpdae().substring(0, 10)%></td>
+							<td><%=sapList.get(i).getSapoUpdaeEnd().substring(0, 10) %></td>
+							<td><%=sapList.get(i).getSapoLink() %></td>
+						</tr>
+						<%
+							}
+
+						} else {
+						%>
+						<tr>
+							<th colspan="6">게시물이 없습니다.</th>
+						</tr>
+						<%
+				}
+				%>
+					</tbody>
+				</table>
+					
+</body>
+</html>

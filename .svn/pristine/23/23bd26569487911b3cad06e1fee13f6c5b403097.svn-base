@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qaboard">
+
+	
+	<insert id="insertQaBoard" parameterType="qaboard.QaBoardVO">
+	INSERT INTO QA
+	(qa_qnum,qa_qtitle,qa_qcont,qa_qdate,dic_id,mast_id)
+	VALUES (qaboard_seq.nextval, #{qaQtitle}, #{qaQcont},TO_CHAR(sysdate,'YYYY-MM-DD'),#{dicId},'aa')
+	</insert>
+	
+	
+	<update id="updateQaBoard" >
+	UPDATE QA 
+	SET qa_qtitle = #{qaQtitle} 
+		,qa_qcont = #{qaQcont} 
+		WHERE qa_qnum = #{qaQnum} 
+	</update>
+	
+	
+	<!-- 댓글작성 !!!!!! -->
+	<update id="answerQaBoard" >
+	UPDATE QA 
+	SET qa_Acont = #{qaAcont}  
+	   ,qa_Adate = TO_CHAR(sysdate,'YYYY-MM-DD') 
+		WHERE 
+		qa_qnum = #{qaQnum} 
+	</update>
+	
+	
+
+	<delete id="deleteQaBoard" parameterType="int">
+	delete from QA 
+	where qa_qnum = #{qaQnum}
+	</delete>
+	
+	
+	<resultMap type="qaboard.QaBoardVO" id="QaMap">
+		<result property="qaQtitle" column = "qa_qtitle"/>
+		<result property="qaQcont" column = "qa_qcont"/>
+		<result property="dicId" column = "dic_id"/>
+		<result property="qaAcont" column = "qa_acont"/>
+		<result property="mastId" column = "mast_id"/>
+		<result property="qaQnum" column = "qa_qnum"/>
+	</resultMap>
+	
+	<select id="QaBoardAllList" resultMap="QaMap">
+		select *from QA ORDER BY Qa_Qnum DESC
+		
+	</select>
+	
+	<select id="getQaBoard" resultMap="QaMap">
+		select *
+		from QA
+		where qa_qnum  = #{qaQnum}
+	</select>
+	
+	
+	<select id="checkQaBoard" parameterType="int" resultType="int">
+		select count(*) as cnt
+		from QA
+		where qa_qnum = #{qaQnum}
+	</select>
+	
+	<select id="searchQaBoardList" parameterType="QaBoardVO" resultType="QaBoardVO">
+	
+		select * from QA 
+		where 1=1
+		<if test="qaQnum != null and qaQnum != ''">
+	 		and qa_qnum  like '%' || #{qaQnum} || '%'
+		</if>
+		<if test="qaQtitle != null and qaQtitle != ''">
+		 	and qa_title  like '%' || #{qaQtitle} || '%'
+		</if>
+		<if test="dicId != null and dicId != ''">
+		  	and dic_id  like '%' || #{dicId} || '%'
+		</if>
+		<if test="qaQcont != null and qaQcont != ''">
+		  	and qa_qcont like '%' || #{qaQcont} || '%'
+		</if>
+	</select>
+	
+	<select id="myQaBoardList" parameterType="QaBoardVO" resultType="QaBoardVO">
+		SELECT *
+		FROM QA
+		WHERE 1=1
+			<if test="dicId != null and dicId != ''">
+			and dic_id = #{dicId}
+		</if>
+	</select>
+	
+</mapper>

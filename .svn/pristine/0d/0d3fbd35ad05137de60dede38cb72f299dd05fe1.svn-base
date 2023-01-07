@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<ul>
+       <li><a class="home" href="#">HOME</a></li><br>
+       <li><a href="<%=request.getContextPath()%>/view/dic/dicmodifyForm.jsp">회원정보 설정</a></li><br>
+       <li><a href="#">즐겨찾기</a></li><br>
+       <li><a href="<%=request.getContextPath()%>/mypage/list.do">나의 게시물</a></li><br>
+       <li><a href="#">나의  Q&A</a></li><br>
+       <li><a href="#">나의  포인트</a></li>
+     </ul>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dicboard/login.css">
+<title> 로 그 인</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+        <header> 
+            <h2>Login</h2>
+        </header>
+
+   <form id="jhForm" action="<%=request.getContextPath()%>/login.do" method="post">
+         <div class="input-box">
+            <label class="label" for="name">I D :</label> <input type="text"
+               id="LgdicId" name="LgdicId" placeholder="아이디" required>
+         </div>
+         <div class="input-box">
+            <label class="label" for="name">패스워드 :</label> <input type="text"
+               id="LgdicPs" name="LgdicPs" placeholder="비밀번호" required>
+         </div>
+         <div id="forgot">
+         <a href="findId.jsp">아이디 찾기</a>
+         <a href="findPw.jsp">비밀번호 찾기</a>
+         </div>
+         <div class="input-box">
+         <input type="submit"  value="로그인">
+         </div>
+   </form>
+   <script>
+
+$("#jhForm").on("submit",function(){
+   event.preventDefault(); // 폼 전송 막기
+   let dataM = $("#jhForm").serialize(); // dicName=?&dicPh=?   
+   $.ajax({
+      method:"get",
+      url:"<%=request.getContextPath()%>/DicIdPwCheck.do",
+      data:dataM,
+      dataType:"text", // 주의 보내는 데이타 타입 아님, 받는 데이터타입
+      success:function(result){
+         console.log("넘어온 값:",result);
+         if(result == "fail"){
+            swal('실패', "해당하는 정보가 없습니다. 다시확인해주세요.", 'warning');
+            $("#LgdicId")[0].focus();
+            return;  // 종료 빼먹으면 안되용
+         }
+         document.querySelector("#jhForm").submit(); // 종환이 컴터 이상함, jQuery동작이..
+      },  
+      error: function (request, status, error) {
+                 console.log("code: " + request.status)
+                 console.log("message: " + request.responseText)
+                 console.log("error: " + error);
+      }         
+   })   
+})   
+   
+   </script>
+</body>
+</html>

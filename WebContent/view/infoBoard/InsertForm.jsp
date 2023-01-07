@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/QnAlist/insert.css">
+<style type="text/css"> 
+ .abc{
+ 	color:#fff; 
+	border-color:#6c757d; 
+	background-color:#6c757d; 
+	border-radius: 0.75rem;
+}
+main{
+ 	font-family: serif; 
+/* 	font-family: sans-serif; */
+/* 	font-family: monospace; */
+}
+</style>
+<link href="css/QnAlist/Styles.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/styles2.css">
+<title>새글 등록</title>
+</head>
+<body>
+<main>
+		<div class="h1Container">
+			<h1>게시물 작성 </h1>
+		</div>
+	<form action="insert.do" method="post" enctype="multipart/form-data">
+
+		<div class="inputContainer">
+			<label class="label" for="name">제목 : </label>
+			<input type="text" id="name" name="infoboTitle" placeholder="제목을 작성하세요">
+		</div>
+		<div class="inputContainer">
+			<label for="name">작성자 : </label>
+			<input type="text" id="writer" name="dicId" value=${ID} readonly >
+		</div>
+		<div class="inputContainer">
+			<label for="name">내용 : </label>
+			<textarea id="description" name="infoboCon" placeholder="내용을 작성하세요" rows="30" cols="50" ></textarea>
+		</div>
+		<div class="inputContainer">
+			<label for="name">첨부파일  </label>
+			<input type="file" name="atchFile" multiple="multiple">
+		</div>
+
+		
+		<div class="submitContainer">
+			<input type="submit" value="게시물등록" class="abc" style="color:#fff; border-color:#6c757d; background-color:#6c757d; border-radius: 0.75rem; ">
+		</div>
+
+	 </form>
+	</main>
+</body>
+</html>
+<%@ include file="../footer.jsp"%>
